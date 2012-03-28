@@ -131,9 +131,7 @@ class Home extends CI_Controller {
       $this->email->subject('You have successfully created a case.');
       $this->email->message("To manage your created cases, please login with your email and password.");
       $this->email->send();
-      $this->email->print_debugger();
     }
-    
 
 	  $vars['title'] = "Create a Case";
 	  $vars['content_view'] = "create_success";

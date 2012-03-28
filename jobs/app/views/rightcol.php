@@ -10,8 +10,7 @@ ncart = 0;
     $cart_items = $this->Cart->mycart($this->session->userdata('id'));
   }else{
     $query = $this->db->query("select * from carts where cart_session='" . $this->session->userdata('cart_session') . "'"); 
-    $cart_items = $query->result_array();
-      
+    $cart_items = $query->result_array();      
   }
   if (sizeof($cart_items) > 0) {
   ?>
@@ -42,7 +41,12 @@ $(function() {
 
 <h3 class="">Login here</h3>
 <?php if (isset($_GET['error'])) {?>
-<div class="alert alert-error">Incorrect username and password.</div>
+  <?php if ($_GET['error'] == "1"):?>
+    <div class="alert alert-error">Incorrect username and password.</div>
+  <?php endif?>
+  <?php if ($_GET['error'] == "2"):?>
+    <div class="alert alert-error">Please login to add items to cart.</div>
+  <?php endif?>  
 <?php } ?>
 <form action="/login" class="well" id="login-form" name="login-form" method="post">
   <label>Email address</label>

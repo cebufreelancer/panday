@@ -19,12 +19,17 @@
           <td>
             <p>Date posted: <?php echo date("m-d-Y", strtotime($c['created_at']));?> </p>
             <p>Estimated price: <?php echo $c['value1']?></p>
-            <a href="#" class="label label-important">Delete</a>
+            <a href="/account/cart-delete?id=<?php echo $c['cid'];?>" class="label label-important">Delete</a>
           </td>
         </tr>
         <?php } ?>
       </tbody>
     </table>
+
+    <label class="pull-right btn btn-success"><a href="/account/cart-empty">Checkout</a></label>
+
     <?php } ?>
+    
+
   </div>
 </div>

@@ -12,7 +12,7 @@ class Cart extends CI_Model {
   
   function mycart($user_id)
   {
-    $query = $this->db->query("select * from carts LEFT JOIN cases on carts.case_id = cases.id LEFT JOIN prices on cases.budget_id = prices.id where carts.user_id = '$user_id' ORDER BY carts.created_at DESC");
+    $query = $this->db->query("select carts.*, carts.id as cid, cases.*, prices.* from carts LEFT JOIN cases on carts.case_id = cases.id LEFT JOIN prices on cases.budget_id = prices.id where carts.user_id = '$user_id' ORDER BY carts.created_at DESC");
     return $query->result_array();
   }
   

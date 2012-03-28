@@ -58,6 +58,8 @@ $route['account/cases'] = "account/cases";
 $route['account/cart'] = "account/cart";
 $route['account/changepw'] = "account/changepw";
 $route['account/cart-empty'] = "account/cart_empty";
+$route['account/cart-delete'] = "account/cart_delete";
+$route['account/bought'] = "account/bought";
 
 
 /* End of file routes.php */

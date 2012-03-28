@@ -11,6 +11,26 @@ class Account extends CI_Controller {
     $this->load->model("Cart"); 
   }
 
+  public function bought()
+  {
+    $this->load->model("Invoice");
+    
+	  $vars['title'] = "Invoices";
+	  $vars['active'] = "Account::Cases";
+	  $vars['content_view'] = "account/invoices";
+	  $vars['invoices'] = $this->Invoice->myinvoices($this->session->userdata('id'));
+	  $this->load->view('template', $vars);
+  }
+
+  public function cart_delete()
+  {
+    $this->load->model("Cart");
+    $id = $_GET['id'];
+    $user_id = $this->session->userdata('id');
+    $this->db->query("Delete from carts where user_id = '$user_id' AND id='$id'");
+    redirect("/account/cart", "location");
+  }
+  
   public function cart_empty()
   {
     $this->load->model("Cart");

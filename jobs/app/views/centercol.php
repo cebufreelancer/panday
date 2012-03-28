@@ -53,8 +53,11 @@
             <p>Date posted: <?php echo date("m-d-Y", strtotime($c['created_at']));?></p>
             <p>Estimated price: <?php echo $c['value1']?></p>
             <div style="width: 150px">
+              <?php if ($this->session->userdata('company')) {?>
               <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
-
+              <?php }else{ ?>
+              <a href="/?error=2" class="btn btn-small btn-warning " data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
+              <?php } ?>
               <a href="/cases?id=<?php echo $c['id'];?>" class="label label-info">Details</a></div>
           </td>
         </tr>
