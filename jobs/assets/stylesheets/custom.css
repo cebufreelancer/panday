@@ -1,0 +1,101 @@
+.topbar{
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 10000;
+overflow: visible;
+}
+
+.topbar .header {
+  background-color: #F8F8F8;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 9px 0 0;
+  }  
+}
+
+.container {
+width: 940px;
+margin-left: auto;
+margin-right: auto;
+zoom: 1;
+}
+
+.brand {
+float: left;
+display: block;
+padding: 8px 20px 12px;
+margin-left: -20px;
+color: white;
+font-size: 20px;
+font-weight: 200;
+line-height: 1;
+}
+.site-title {
+display: none;
+}
+
+.navc {
+  font-family: "Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  float: right;
+  display: block;
+  margin: 0 6px 0 0;
+  position: relative;
+  left: 0;  
+  list-style: disc;
+}
+
+.navc li {
+ margin-left: 2px;
+ display: block;
+ float: left;
+ line-height: 20px;
+ color: #555;
+}
+
+.navc a.active {
+  color: #008EBD;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 14px;
+  text-shadow: none;
+  display: block;
+  float: none;
+  padding: 4px 15px 3px;
+  line-height: 19px;
+  text-decoration: none;      
+}
+
+.navc a {
+  color: #666666;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 14px;
+  text-shadow: none;
+  display: block;
+  float: none;
+  padding: 4px 15px 3px;
+  line-height: 19px;
+  text-decoration: none;      
+}
+
+.navc a:hover {
+  color: #008EBD;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 14px;
+  text-shadow: none;
+  display: block;
+  float: none;
+  padding: 4px 15px 3px;
+  line-height: 19px;
+  text-decoration: none;      
+}
+#login-form input[type=text] {
+  width: 120px;
+}
+
+.error {
+  color: red;
+}
