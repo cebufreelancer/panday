@@ -11,7 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="span3">
+  <div class="span3" >
 
     <form action="/create" method="post" class="well" style="background-color: transparent !important;">
       <fieldset>
@@ -24,7 +24,7 @@
           <div class="control-group">
             <label class="control-label"   for="input01" style="color: white">Description</label>
             <div class="controls" >
-              <textarea class="input-large" id="description" name="description" rows="3" maxlength="250"></textarea>
+              <textarea class="input-large" id="description" name="description" rows="2" maxlength="250"></textarea>
             </div>
           </div>
           <div class="control-group">

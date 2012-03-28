@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta content='text/html; charset=iso-8859-1' http-equiv='Content-Type' />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
     <title>Company name - <?php echo $title; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">

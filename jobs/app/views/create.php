@@ -171,10 +171,12 @@ $(document).ready(function(){
       <textarea  name="description" id="description" class="required input-xxlarge" rows="2" maxlength="250"><?php if (isset($_POST['description'])){echo $_POST['description'];} ?></textarea>
       <label> Budget * </label>
       <select class="required input-xxlarge" id="budget_id" name="budget_id">
+        <option value="">Select budget </option>
         <?php foreach($prices as $p){?>
         <option value="<?php echo $p['id'];?>"><?php echo $p['label'];?></option>
         <?php } ?>
       </select>
+
       <label>Branches</label>
       <?php foreach($branches as $b){ ?>
       <label for="<?php echo $b['code'];?>" class="checkbox" style="display: inline-block !important; padding-right: 10px">

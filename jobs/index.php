@@ -1,9 +1,4 @@
 <?php
-$defines_file = 'defines.php';
-if (file_exists($defines_file))
-{
-    require_once($defines_file);
-}
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

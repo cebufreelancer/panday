@@ -37,5 +37,11 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+define(PASSWD_SALT, "this is not the salt that you wanted");
+// ERROR CODES
+define(ERROR_101, "Current password is incorrect.");
+define(ERROR_102, "Password do not match.");
+
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
