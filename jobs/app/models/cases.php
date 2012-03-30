@@ -54,6 +54,14 @@ class Cases extends CI_Model {
     return $query->result_array();    
   }
 
+    function by_id($id)
+    {
+      $query = $this->db->query("select cases.id, title, description, budget_id, address, zipcode, city, telno, user_id, status, created_at, branch_codes, prices.label, prices.value1 from cases  LEFT JOIN prices ON cases.budget_id = prices.id  WHERE cases.id=$id ORDER BY created_at DESC");
+
+      $ret = $query->result_array();
+      return $ret[0];
+    }
+
   function by_user_id($id, $user_id)
   {
     $query = $this->db->query("select cases.id, title, description, budget_id, address, zipcode, city, telno, user_id, status, created_at, branch_codes, prices.label, prices.value1 from cases  LEFT JOIN prices ON cases.budget_id = prices.id  WHERE cases.user_id = '$user_id' AND cases.id=$id ORDER BY created_at DESC");

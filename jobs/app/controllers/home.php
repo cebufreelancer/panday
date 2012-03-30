@@ -10,6 +10,17 @@ class Home extends CI_Controller {
     $this->load->library('encrypt');
     $this->load->model("Cart"); 
   }
+  
+  public function details()
+  {
+    $this->load->model("Cases");
+    $id = $_GET['id'];
+	  $vars['title'] = "Cases";
+	  $vars['active'] = "cases";
+	  $vars['content_view'] = "details";
+    $vars['case'] =  $this->Cases->by_id($id);
+	  $this->load->view('template', $vars);     
+  }
 
   public function addtocart()
   {
@@ -142,9 +153,12 @@ class Home extends CI_Controller {
 
 	public function companies()
 	{
+	  $this->load->model('User');
+	  
 	  $vars['title'] = "Companies";
 	  $vars['active'] = "Companies";
 	  $vars['content_view'] = "companies";
+	  $vars['companies'] = $this->User->companies();
 	  
 	  $this->load->view('template', $vars);
 

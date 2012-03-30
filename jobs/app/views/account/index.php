@@ -79,8 +79,14 @@
     });
     </script>
 
+    <?php if (isset($_GET['updated'])): ?>
+    <div class="alert alert-success">
+      <a class="close" data-dismiss="alert">×</a>
+      Successfully updated.
+    </div>
+    <?php endif ?>
 
-      <form id="case-form" name="case-form" method="post" action="/create_case">
+      <form id="case-form" name="case-form" method="post" action="/account/update">
         <div class="">
           <label> Name *</label>
           <input type="text" name="name" id="name" value="<?php if($user){ echo $user['name'];}?>" class="required input-xxlarge">
@@ -91,19 +97,11 @@
           <label> City *</label>
           <input type="text" name="city" id="city" value="<?php if($user){ echo $user['city'];}?>" class="required input-xxlarge">
           <label> Email *</label>
-          <input type="text" name="email" id="email" value="<?php if($user){ echo $user['email'];}?>" class="required email input-xxlarge">
+          <input type="text" name="email" id="email" value="<?php if($user){ echo $user['email'];}?>" class="required email input-xxlarge" readonly>
 
           <label> Tel. Number *</label>
           <input type="text" name="telno" id="telno" value="<?php if($user){ echo $user['telno'];}?>" class="required input-xxlarge">
-          
-          <br/><br/>
-          <label> Current Password: *</label>
-          <input type="password" name="curpassword" id="curpassword" value="" class=" input-xxlarge">
-          <label> Password: *</label>
-          <input type="password" name="password" id="password" value="" class=" input-xxlarge">
-          <label> Confirm Password: *</label>
-          <input type="password" name="cpassword" id="cpassword" value="" class=" input-xxlarge">
-          <br/>
+                    <br/>
           
           <button type="submit" class="btn btn-large btn-primary">Submit</button>
         </div>

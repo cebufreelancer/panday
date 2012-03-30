@@ -62,7 +62,13 @@ class User extends CI_Model {
 
   function find_by_id($id)
   {
-    $query = $this->db->query("SELECT * FROM users WHERE id='" . $email . "' LIMIT 1");
+    $query = $this->db->query("SELECT * FROM users WHERE id='" . $id . "' LIMIT 1");
+    return $query->row_array();
+  }
+  
+  function companies()
+  {
+    $query = $this->db->query("SELECT * FROM users WHERE usertype='company'");
     return $query->row_array();
   }
 

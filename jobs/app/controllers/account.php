@@ -9,21 +9,74 @@ class Account extends CI_Controller {
     $this->load->library('cart');
     $this->load->library('encrypt');
     $this->load->model("Cart"); 
+    $this->load->model("User"); 
   }
 
+  public function update()
+  {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $zipcode = $_POST['zipcode'];
+    $city = $_POST['city'];
+    $telno = $_POST['telno'];
+    
+    $sql = "UPDATE users SET name='$name', address='$address', zipcode='$zipcode', city='$city', telno='$telno'";
+    $this->db->query($sql);
+    redirect("/account?updated=1", "location");
+  }
+  
+  public function checkout()
+  {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    $this->load->model("Invoices");
+    $cart = $this->Cart->mycart($this->session->userdata('id'));
+
+    if (!empty($cart)){
+      $user_id = $this->session->userdata('id');
+      $invoice = $this->Invoices->createnew($user_id);
+      $this->db->query("Delete from carts where user_id = '$user_id'");
+    }
+    redirect("/account/paid?id=" . $this->session->userdata('id') . "&invoice_id=" . $invoice['id'], 'location');
+  }
+  
+  public function paid()
+  {
+    //TODO: send pdf invoice to email
+    $this->email->from('michaxze@gmail.com', 'Michael Gimena');
+    $this->email->to('michaxze@gmail.com');
+    $this->email->subject('You have successfully created a case.');
+    $this->email->message("To manage your created cases, please login with your email and password.");
+    $this->email->send();
+        
+    redirect("/account/bought", 'location');
+  }
+  
   public function bought()
   {
-    $this->load->model("Invoice");
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    $this->load->model("Invoices");
     
 	  $vars['title'] = "Invoices";
 	  $vars['active'] = "Account::Cases";
 	  $vars['content_view'] = "account/invoices";
-	  $vars['invoices'] = $this->Invoice->myinvoices($this->session->userdata('id'));
+	  $vars['invoices'] = $this->Invoices->myinvoices($this->session->userdata('id'));
+	  
 	  $this->load->view('template', $vars);
   }
 
   public function cart_delete()
   {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
     $this->load->model("Cart");
     $id = $_GET['id'];
     $user_id = $this->session->userdata('id');
@@ -33,6 +86,9 @@ class Account extends CI_Controller {
   
   public function cart_empty()
   {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
     $this->load->model("Cart");
     $id = $this->session->userdata('id');
     $this->db->query("Delete from carts where user_id = '$id'");
@@ -41,7 +97,13 @@ class Account extends CI_Controller {
   
 	public function cases()
 	{
+	  if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+
 	  $this->load->model('Cases');
+	  $this->load->model("Invoices");
+	  
 	  $vars['title'] = "Cases";
 	  $vars['active'] = "Account::Cases";
 	  $vars['content_view'] = "account/cases";
@@ -51,9 +113,12 @@ class Account extends CI_Controller {
 	  if (isset($_GET['id'])){	    
 	    $user_id = $this->session->userdata('id');
 	    $id = $_GET['id'];
-//	    $res = $this->db->query("select * from cases where user_id = '$user_id' AND id='$id'");
-//	    $res = $res->result_array();
-	    $vars['case'] = $this->Cases->by_user_id($id, $user_id);
+	    $case =  $this->Cases->by_user_id($id, $user_id);
+      $vars['case'] = $case;
+      
+      // get companies who buy this case
+      $companies = $this->Invoices->get_companies($case['id']);
+	    $vars['companies'] = $companies;
 	  }
 	  
 	  $this->load->view('template', $vars);
@@ -62,6 +127,10 @@ class Account extends CI_Controller {
 
 	public function cart()
 	{
+	  if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    
 	  $this->load->model('Cart');
 	  
 	  $vars['title'] = "Cart";
@@ -75,20 +144,22 @@ class Account extends CI_Controller {
 
 	public function changepw()
 	{
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }	  
 	  $this->load->model("User");
 	  
 	  $vars['title'] = "Change Password";
 	  $vars['active'] = "Change Password";
 	  $vars['content_view'] = "account/changepw";
-    print_r($_POST);
-    die('here');
-	  
-	  if (isset($_POST['name'])){
+
+	  if (isset($_POST['sent'])){
 	    $user= $this->User->find_by_email($this->session->userdata('email'));
 	    if ($user['password'] == ($this->encrypt->sha1($_POST['curpassword'], PASSWD_SALT))){
 	      if ($_POST['password'] == $_POST['cpassword']){
-	        $newpassword = $this->encrypt->sha1($post['password'], PASSWD_SALT);
+	        $newpassword = $this->encrypt->sha1($_POST['password'], PASSWD_SALT);
 	        $this->db->query("Update users set password='$newpassword' WHERE email = '" . $this->session->userdata('email') . "'");
+	        $vars['changed'] = true;
 	      }else{
 	        $vars['error'] = ERROR_102;
 	      }
@@ -96,12 +167,16 @@ class Account extends CI_Controller {
 	      $vars['error'] = ERROR_101;
 	    }
 	  }	  
-	  
+
 	  $this->load->view('template', $vars);
 	}
 
 	public function index()
 	{
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    
 	  $this->load->model('User');
 	  $this->load->model('Prices');
 	  $vars['user'] = NULL;
@@ -114,5 +189,7 @@ class Account extends CI_Controller {
 	  $this->load->view('template', $vars);
 
 	}
+	
+
 	
 }

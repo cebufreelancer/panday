@@ -10,6 +10,11 @@
 |
 */
 
+public function check_session()
+{
+  redirect("/", "location");
+}
+
 
 
 /* End of file hooks.php */

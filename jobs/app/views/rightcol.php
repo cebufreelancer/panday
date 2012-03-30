@@ -1,27 +1,30 @@
-<script>
-ncart = 0;
-</script>
-<div id="cart" onclick="location.replace('/account/cart');" style="margin-top: 8px">
-  <i class="icon-shopping-cart"></i>
-  <span>
-  <?php
+<div >&nbsp;</div>
+<?php if ($this->session->userdata('company')) {?>
+  <script>
+  ncart = 0;
+  </script>
+  <div id="cart" onclick="location.replace('/account/cart');" style="margin-top: 8px">
+    <i class="icon-shopping-cart"></i>
+    <span>
+    <?php
 
-  if ($this->session->userdata('company')) {
-    $cart_items = $this->Cart->mycart($this->session->userdata('id'));
-  }else{
-    $query = $this->db->query("select * from carts where cart_session='" . $this->session->userdata('cart_session') . "'"); 
-    $cart_items = $query->result_array();      
-  }
-  if (sizeof($cart_items) > 0) {
-  ?>
-  <?php echo sizeof($cart_items) ?> items.
+    if ($this->session->userdata('company')) {
+      $cart_items = $this->Cart->mycart($this->session->userdata('id'));
+    }else{
+      $query = $this->db->query("select * from carts where cart_session='" . $this->session->userdata('cart_session') . "'"); 
+      $cart_items = $query->result_array();      
+    }
+    if (sizeof($cart_items) > 0) {
+    ?>
+    <?php echo sizeof($cart_items) ?> items.
 
-  <?php }else{?>
-   Your cart is empty
-  <?php }?>
-  </span>
-</div>
+    <?php }else{?>
+     Your cart is empty
+    <?php }?>
+    </span>
+  </div>
 
+<?php } ?>
 
 
 <?php
@@ -39,7 +42,7 @@ $(function() {
 });
 </script>
 
-<h3 class="">Login here</h3>
+<h3 class=""  style="text-align: center">Login here</h3>
 <?php if (isset($_GET['error'])) {?>
   <?php if ($_GET['error'] == "1"):?>
     <div class="alert alert-error">Incorrect username and password.</div>
@@ -53,7 +56,7 @@ $(function() {
   <input type="text" style="width: 120px" class="focused required" placeholder="email" name="email" id="email">
   <label>Password</label>
   <input type="password" style="width: 120px" class="focused required" placeholder="password" name="password" id="password">
-  <a href="#" class="label label-info">Forget your password?</a>
+  <a href="/forget" class="label label-info">Forget your password?</a>
   <div class="clearfix"></div>
   <br/>
   <button type="submit" class="btn">Log in</button>

@@ -1,6 +1,5 @@
-
-
-<div class="row" style="background-image: url(/assets/images/main_background.jpg); background-position: 27px 1px; background-repeat: no-repeat; margin-top: 10px">
+<div >&nbsp;</div>
+<div class="row" style="background-image: url(/assets/images/main_background.jpg); background-position: 27px 5px; background-repeat: no-repeat; margin-top: 0px;">
   <div class="span3">
     <div style="margin: 20px; color: white">
       <h3> Fa 3 gratis </h3>
@@ -11,8 +10,8 @@
       </ul>
     </div>
   </div>
-  <div class="span3" >
 
+  <div class="span3" >
     <form action="/create" method="post" class="well" style="background-color: transparent !important;">
       <fieldset>
           <div class="control-group" >
@@ -50,15 +49,17 @@
           <p><?php echo $c['description'];?></p>
           </td>
           <td>
-            <p>Date posted: <?php echo date("m-d-Y", strtotime($c['created_at']));?></p>
+            <p>Date posted: <?php echo date("d-m-Y", strtotime($c['created_at']));?></p>
             <p>Estimated price: <?php echo $c['value1']?></p>
             <div style="width: 150px">
-              <?php if ($this->session->userdata('company')) {?>
-              <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
-              <?php }else{ ?>
-              <a href="/?error=2" class="btn btn-small btn-warning " data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
+              <?php if ($this->session->userdata('email')){ ?>
+                <?php if ($this->session->userdata('company')) {?>
+                <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
+                <?php } ?>
+              <?php }else{ ?>                
+                <a href="/?error=2" class="btn btn-small btn-warning " data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
               <?php } ?>
-              <a href="/cases?id=<?php echo $c['id'];?>" class="label label-info">Details</a></div>
+              <a href="/details?id=<?php echo $c['id'];?>" class="label label-info">Details</a></div>
           </td>
         </tr>
         <?php } ?>

@@ -44,9 +44,11 @@ $route['404_override'] = '';
 
 $route['login'] = "home/login";
 $route['logout'] = "home/logout";
+$route['forget'] = "home/forget";
 
 $route['addtocart'] = "home/addtocart";
 $route['cases'] = "home/cases";
+$route['details'] = "home/details";
 $route['create_case'] = "home/create_case";
 $route['create'] = "home/create";
 $route['companies'] = "home/companies";
@@ -54,6 +56,8 @@ $route['about'] = "home/about";
 $route['contactus'] = "home/contactus";
 
 $route['account'] = "account/index";
+$route['account/update'] = "account/update";
+$route['account/paid'] = "account/paid";
 $route['account/cases'] = "account/cases";
 $route['account/cart'] = "account/cart";
 $route['account/changepw'] = "account/changepw";

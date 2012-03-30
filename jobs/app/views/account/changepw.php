@@ -83,11 +83,12 @@
     <div class="alert alert-success"> Password successfully changed.</div>
     <?php } ?>
 
-    <?php if (isset($changed)) {?>
-    <div class="alert alert-success"> Password successfully changed.</div>
+    <?php if (isset($error)) {?>
+    <div class="alert alert-error"><?php echo $error;?></div>
     <?php } ?>
     
-      <form id="changepw-form" name="changepw-form" method="post" action="/changepw">
+      <form id="changepw-form" name="changepw-form" method="post" action="/account/changepw">
+        <input type="hidden" name="sent" value="sent">
         <div class="">
           <label> Current Password: *</label>
           <input type="password" name="curpassword" id="curpassword" value="" class="required input-xxlarge">
