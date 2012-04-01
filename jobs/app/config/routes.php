@@ -45,6 +45,10 @@ $route['404_override'] = '';
 $route['login'] = "home/login";
 $route['logout'] = "home/logout";
 $route['forget'] = "home/forget";
+$route['register'] = "home/register";
+$route['register_success'] = "home/register_success";
+$route['activate'] = "home/activate";
+$route['password_reset'] = "home/password_reset";
 
 $route['addtocart'] = "home/addtocart";
 $route['cases'] = "home/cases";

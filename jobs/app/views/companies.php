@@ -2,7 +2,7 @@
   <h2>List of Companies</h2>
 </div>
 
-<?php print_r($companies);?>
+
 <div class="row">
   <div class="span6">
     <table >
@@ -11,11 +11,11 @@
         <?php foreach($companies as $comp){ ?>
           <tr>
             <td><img class="" src="http://placehold.it/260x180" alt="" width="80" align="left" style="padding: 0px 5px 5px 0px"></td>
-            <td><h5>Company Name</h5>
-            <p>About the company here About the company here About the company here About the company here  </p>
+            <td><h5><?php echo $comp['company_name'];?></h5>
+            <p></p>
             </td>
             <td>
-              <div style="width: 100px"> <a href="#" class="btn">Read more</a></div>
+              
             </td>
           </tr>
           

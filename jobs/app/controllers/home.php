@@ -10,6 +10,119 @@ class Home extends CI_Controller {
     $this->load->library('encrypt');
     $this->load->model("Cart"); 
   }
+
+  public function password_reset()
+  {
+	  $vars['title'] = "Home";
+	  $vars['content_view'] = "password_reset";
+	  $vars['active'] = "";
+	  $vars['user'] = NULL;
+	  $vars['success'] = NULL;
+	  
+	  if (isset($_POST['sent'])){
+	    $vars['success'] = true;
+	  }
+	  $this->load->view('template', $vars);
+  }
+  
+  public function activate()
+  {
+    $this->load->model("Tokens");
+    $this->load->model("User");
+    // localhost:8888/activate?email=jam@gmail.com&token=71caea2fe47427190252e1031f8e4984cb431f59
+	  $vars['title'] = "";
+	  $vars['content_view'] = "activate";
+	  $vars['active'] = "";
+	  $vars['user'] = NULL;
+	  $vars['activated'] = NULL;
+	  
+	  $token = $this->Tokens->by_token($_GET['token']);
+	  $user = $this->User->find_by_email($token['email']);
+	  if ($token) {
+	    if ($token['is_used'] == 0){
+	      $vars["activated"] = true;
+	      $this->Tokens->update_token($token);
+	      $this->User->activate($user);
+      }else{
+        $vars['activated'] = NULL;
+      }
+	  }
+	  $this->load->view('template', $vars);
+    
+  }
+  
+  public function register_success()
+  {
+    
+	  $vars['title'] = "Registration for Companies";
+	  $vars['content_view'] = "register_success";
+	  $vars['active'] = "companies";
+	  $vars['user'] = NULL;
+	  $this->load->view('template', $vars);
+  }
+  
+  public function register()
+  {
+    $this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		
+	  $this->load->model("User");	  
+	  $this->load->model('Prices');
+	  $this->load->model('Branch');  
+    $this->form_validation->set_message('is_unique[users.email]', 'Email address already exists');
+    
+	  $vars['title'] = "Registration for Companies";
+	  $vars['content_view'] = "register";
+	  $vars['active'] = "companies";
+	  $vars['user'] = NULL;
+
+	  if (isset($_POST['sent'])){
+      $this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+      $this->form_validation->set_rules('cpassword', 'Password Confirmation', 'required');
+      $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+      $this->form_validation->set_rules('company_name', 'Company Name', 'required|min_length[5]|is_unique[users.company_name]');
+	    
+	    if ($this->form_validation->run() == FALSE)
+	    {
+// do nothing
+	    }else{
+  	    $this->User->createcompany($_POST);
+        $this->load->library('mailer'); 
+        $this->mailer->company_activation_link($_POST['email'], $_POST['company_name']);
+        redirect("/register_success", "location");	      	      
+	    }
+	  }
+
+	  $vars['prices'] = $this->Prices->all();
+	  $vars['branches'] = $this->Branch->all();
+	  
+	  
+	  $this->load->view('template', $vars);
+    
+  }
+  
+  public function forget()
+  { 
+    $this->load->model("User");
+    $this->load->library('mailer');
+    $this->load->library('email');
+    
+	  $vars['title'] = "Forget Password";
+	  $vars['active'] = "";
+	  $vars['content_view'] = "forget";
+	  
+	  if (isset($_POST['sent'])){
+	     $user = $this->User->find_by_email($_POST['email']);
+	     if ($user) {
+         $this->mailer->password_link($user);
+	       $vars['submitted'] = true;
+	     }else{
+	       $vars['error'] = ERROR_103;
+	     }
+	  }
+	  $this->load->view('template', $vars); 
+  }
+
   
   public function details()
   {
@@ -103,6 +216,9 @@ class Home extends CI_Controller {
 
 	public function create()
 	{
+    $this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+	  
 	  $this->load->model('User');
 	  $this->load->model('Prices');
 	  $this->load->model('Branch');
@@ -116,18 +232,57 @@ class Home extends CI_Controller {
 	  }
 	  $vars['prices'] = $this->Prices->all();
 	  $vars['branches'] = $this->Branch->all();
+
+
+	  if (isset($_POST['sent'])){
+	    $this->form_validation->set_rules('title', 'Title', 'required|min_length[5]');
+	    $this->form_validation->set_rules('description', 'Description', 'required');
+	    $this->form_validation->set_rules('city', 'City', 'required');
+	    $this->form_validation->set_rules('zipcode', 'Zip code', 'required');
+      $this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+      $this->form_validation->set_rules('cpassword', 'Password Confirmation', 'required');
+      $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+
+	    if ($this->form_validation->run() == FALSE)
+	    {
+        // do nothing
+      }else{
+    	  $this->load->library('email');
+        $this->load->model('Cases');
+
+        $user = $this->User->find_by_email($_POST['email']);
+        if ($user) {
+          $this->User->update_record($user['id'], $_POST);
+        }else{
+          $this->User->create($_POST);
+          $user = $this->User->find_by_email($_POST['email']);
+        }
+        $case = $this->Cases->create($_POST, $user);
+
+        if ($case){
+          $this->load->library('mailer');
+          $this->mailer->user_activation_link($_POST['email'], $user['name']);
+        }
+
+    	  $vars['title'] = "Create a Case";
+    	  $vars['content_view'] = "create_success";
+    	  $vars['active'] = "create";
+
+      }
+    }	  
+	  
 	  $this->load->view('template', $vars);
 	}
-	
+
+/*	
 	public function create_case()
 	{
-	  $this->load->library('email');
-	  
+
+	  $this->load->library('email');	  
     $this->load->model('User');
     $this->load->model('Cases');
     
     $user = $this->User->find_by_email($_POST['email']);
-
     if ($user) {
       $this->User->update_record($user['id'], $_POST);
     }else{
@@ -150,6 +305,7 @@ class Home extends CI_Controller {
     
     $this->load->view('template', $vars);
 	}
+*/
 
 	public function companies()
 	{

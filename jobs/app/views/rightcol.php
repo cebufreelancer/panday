@@ -1,4 +1,16 @@
+<?php
+$CI =& get_instance();
+?>
+
 <div >&nbsp;</div>
+
+<?php if (!$this->session->userdata('email')) {?>
+<div>
+  Are you a company?
+  <a class="btn" href="/register" >Register Here</a>
+</div>
+<?php } ?>
+
 <?php if ($this->session->userdata('company')) {?>
   <script>
   ncart = 0;
@@ -27,41 +39,17 @@
 <?php } ?>
 
 
-<?php
-$CI =& get_instance();
-?>
 
 <?php if (!$CI->session->userdata('email')):?>
-<script>
-$(function() {
-  $("#login-form").validate({
-     submitHandler: function(form){
-       form.submit();
-     }
+  <script>
+  $(function() {
+    $("#login-form").validate({
+       submitHandler: function(form){
+         form.submit();
+       }
+    });
   });
-});
-</script>
-
-<h3 class=""  style="text-align: center">Login here</h3>
-<?php if (isset($_GET['error'])) {?>
-  <?php if ($_GET['error'] == "1"):?>
-    <div class="alert alert-error">Incorrect username and password.</div>
-  <?php endif?>
-  <?php if ($_GET['error'] == "2"):?>
-    <div class="alert alert-error">Please login to add items to cart.</div>
-  <?php endif?>  
-<?php } ?>
-<form action="/login" class="well" id="login-form" name="login-form" method="post">
-  <label>Email address</label>
-  <input type="text" style="width: 120px" class="focused required" placeholder="email" name="email" id="email">
-  <label>Password</label>
-  <input type="password" style="width: 120px" class="focused required" placeholder="password" name="password" id="password">
-  <a href="/forget" class="label label-info">Forget your password?</a>
-  <div class="clearfix"></div>
-  <br/>
-  <button type="submit" class="btn">Log in</button>
-  <br/>
-</form>
+  </script>
 
   <?php
   require 'facebook.php';
@@ -71,43 +59,57 @@ $(function() {
     'secret' => 'e84ed389e3767b233c8b144069bf78f5',
   ));
 
+
   // Get User ID
-  $user = $facebook->getUser();
+  $fbuser = $facebook->getUser();
   
-  if ($user) {
+  if ($fbuser) {
     try {
       // Proceed knowing you have a logged in user who's authenticated.
       $user_profile = $facebook->api('/me');
     } catch (FacebookApiException $e) {
       error_log($e);
-      $user = null;
+      $fbuser = null;
     }
   }
   
-  if ($user) {
+  if ($fbuser) {
     $logoutUrl = $facebook->getLogoutUrl();
   } else {
     $loginUrl = $facebook->getLoginUrl();
   }
-  
+
  
   ?>
-  
-  <?php if ($user): ?>
-    <a href="<?php echo $logoutUrl; ?>">Logout</a>
-  <?php else: ?>
-    <div>
-      <a class="btn" href="<?php echo $loginUrl; ?>">Login with Facebook</a>
-    </div>
-  <?php endif ?>
-  
-  <?php if ($user): ?>
-    <h3>You</h3>
-    <img src="https://graph.facebook.com/<?php echo $user; ?>/picture">
-    <pre><?php print_r($user_profile); ?></pre>
 
-  <?php endif ?>
+  <h3 class=""  style="text-align: center">Login here</h3>
+  <?php if (isset($_GET['error'])) {?>
+    <?php if ($_GET['error'] == "1"):?>
+      <div class="alert alert-error">Incorrect username and password.</div>
+    <?php endif?>
+    <?php if ($_GET['error'] == "2"):?>
+      <div class="alert alert-error">Please login to add items to cart.</div>
+    <?php endif?>  
+  <?php } ?>
+  <form action="/login" class="well" style="padding:10px !important" id="login-form" name="login-form" method="post">
+    <label>Email address</label>
+    <input type="text" style="width: 120px" class="focused required" placeholder="email" name="email" id="email">
+    <label>Password</label>
+    <input type="password" style="width: 120px" class="focused required" placeholder="password" name="password" id="password">
+    <a href="/forget" class="label label-info">Forgot your password?</a>
+    <div class="clearfix"></div>
+    <br/>
+    <button type="submit" class="btn">Log in</button>
+    <br/>
+    <?php if ($fbuser): ?>
+      <a href="<?php echo $logoutUrl; ?>">Logout</a>
+    <?php else: ?>
+      <a class="btn" href="<?php echo $loginUrl; ?>">Login with Facebook</a>
+    <?php endif ?>  
+  </form>
+  
 <?php endif ?>
+
 
 
 <div class="well">Facebook page</div>

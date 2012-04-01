@@ -155,6 +155,13 @@ $(document).ready(function(){
  
 </script>
 
+<?php if (validation_errors()) {?>
+<div class="alert alert-error">
+  <a class="close" data-dismiss="alert">X</a>
+  <?php echo validation_errors(); ?>
+</div>
+<?php }?>
+
 <ul class="nav nav-tabs">
   <li class="active header-step" title="0">
     <a href="#">Beskriv din opgave</a>
@@ -163,7 +170,8 @@ $(document).ready(function(){
   <li id="three" class="header-step" title="2" summary="true"><a href="#">Godkend & send</a></li>
 </ul>
 <div>
-  <form id="case-form" name="case-form" method="post" action="/create_case">
+  <form id="case-form" name="case-form" method="post" action="/create">
+    <input type="hidden" name="sent" value="sent">
     <div class='step'>
       <label> Title *</label>
       <input type="text" name="title" value="<?php if (isset($_POST['title'])){echo $_POST['title'];}?>" id="title" class="required input-xxlarge">
@@ -191,22 +199,52 @@ $(document).ready(function(){
       <button type="button" class="btn btn-large btn-primary next"  direction="next">Next step</button>
     </div>
 
+<?php
+$name = "";
+$address = "";
+$zipcode = "";
+$city = "";
+$email = "";
+$cemail= "";
+$telno= "";
+
+ if(isset($_POST['sent'])){
+   $name = $_POST['name'];
+   $address = $_POST['address'];
+   $zipcode = $_POST['zipcode'];
+   $city = $_POST['city'];
+   $email = $_POST['email'];
+   $cemail= $_POST['cemail'];   
+   $telno= $_POST['telno'];   
+ }else{
+   if ($user){
+     $name = $user['name'];
+     $address = $user['address'];
+     $zipcode = $user['zipcode'];
+     $city = $user['city'];
+     $email = $user['email'];
+     $cemail= $email;
+     $telno= $user['telno'];   
+   }
+ }
+ 
+?>
     <div class="step hide">
       <label> Name *</label>
-      <input type="text" name="name" id="name" value="<?php if($user){ echo $user['name'];}?>" class="required input-xxlarge">
+      <input type="text" name="name" id="name" value="<?php echo $name; ?>" class="required input-xxlarge">
       <label> Address *</label>
-      <input type="text" name="address" id="address" value="<?php if($user){ echo $user['address'];}?>" class="required input-xxlarge">
+      <input type="text" name="address" id="address" value="<?php echo $address; ?>" class="required input-xxlarge">
       <label> Zip code *</label>
-      <input type="text" name="zipcode" id="zipcode" value="<?php if($user){ echo $user['zipcode'];}?>" class="required input-xxlarge">
+      <input type="text" name="zipcode" id="zipcode" value="<?php echo $zipcode ?>" class="required input-xxlarge">
       <label> City *</label>
-      <input type="text" name="city" id="city" value="<?php if($user){ echo $user['city'];}?>" class="required input-xxlarge">
+      <input type="text" name="city" id="city" value="<?php echo $city; ?>" class="required input-xxlarge">
       <label> Email *</label>
-      <input type="text" name="email" id="email" value="<?php if($user){ echo $user['email'];}?>" class="required email input-xxlarge">
+      <input type="text" name="email" id="email" value="<?php  echo $email; ?>" class="required email input-xxlarge">
       <label> Confirm Email *</label>
-      <input type="text" name="cemail" id="cemail" value="<?php if($user){ echo $user['email'];}?>" class="required email input-xxlarge">
+      <input type="text" name="cemail" id="cemail" value="<?php echo $email; ?>" class="required email input-xxlarge">
 
       <label> Tel. Number *</label>
-      <input type="text" name="telno" id="telno" value="<?php if($user){ echo $user['telno'];}?>" class="required input-xxlarge">
+      <input type="text" name="telno" id="telno" value="<?php echo $telno; ?>" class="required input-xxlarge">
       <?php if (!$user): ?>
       <label> Password: *</label>
       <input type="password" name="password" id="password" value="" class="required input-xxlarge">

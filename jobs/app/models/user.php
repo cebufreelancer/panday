@@ -19,8 +19,40 @@ class User extends CI_Model {
   function login($email, $password)
   {
     $password = $this->encrypt->sha1($password, PASSWD_SALT);
-    $query = $this->db->query("SELECT * FROM users WHERE email='" . $email . "' AND password='" . $password . "' LIMIT 1");
+    $query = $this->db->query("SELECT * FROM users WHERE status=1 AND email='" . $email . "' AND password='" . $password . "' LIMIT 1");
     return $query->row_array();
+  }
+
+  function createcompany($post)
+  {
+    $this->load->library('encrypt');
+    $this->company_name  = $post['company_name'];
+    $this->description = $post['description'];
+    $this->address = $post['address'];
+    $this->zipcode = $post['zipcode'];
+    $this->city = $post['city'];
+    $this->contact_person = $post['contact_person'];
+    $this->cvrnumber = $post['cvrnumber'];
+    $this->city = $post['city'];
+    $this->website = $post['website'];
+    $this->usertype = "company";
+    
+    $this->email = $post['email'];
+    $this->telno = $post['telno'];
+    
+    $this->password = $this->encrypt->sha1($post['password'], PASSWD_SALT);
+    $this->created_at = date("Y-m-d H:i:s");
+
+    $branch_codes = '';
+    foreach($post['branches'] as $b)
+    {
+      $branch_codes += $b . ", ";
+    }
+    $this->branch_codes = $branch_codes;
+    $ret = $this->db->insert('users', $this);
+
+    $this->db->close();
+    return $ret;
   }
   
   function create($post)
@@ -69,7 +101,14 @@ class User extends CI_Model {
   function companies()
   {
     $query = $this->db->query("SELECT * FROM users WHERE usertype='company'");
-    return $query->row_array();
+    return $query->result_array();
+  }
+  
+  function activate($user)
+  {
+    $data = array('status' => "1");
+    $this->db->where('id', $user['id']);
+    $this->db->update('users', $data);
   }
 
   

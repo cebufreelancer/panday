@@ -12,21 +12,21 @@
   </div>
 
   <div class="span3" >
-    <form action="/create" method="post" class="well" style="background-color: transparent !important;">
+    <form action="/create" method="post" name="case" id="case" class="well" style="background-color: transparent !important; padding-top: 20px !important">
       <fieldset>
-          <div class="control-group" >
+          <div class="control-group" style="margin-bottom: 3px !important">
             <label class="control-label"  for="input01" style="color: white">Headline</label>
             <div class="controls" >
-              <input type="text" class="input-large" id="title" name="title" autocomplete="off">
+              <input type="text" class="required input-large" id="title" name="title" autocomplete="off">
             </div>
           </div>
-          <div class="control-group">
+          <div class="control-group" style="margin-bottom: 3px !important">
             <label class="control-label"   for="input01" style="color: white">Description</label>
             <div class="controls" >
-              <textarea class="input-large" id="description" name="description" rows="2" maxlength="250"></textarea>
+              <textarea class="required input-large" id="description" name="description" rows="2" maxlength="250"></textarea>
             </div>
           </div>
-          <div class="control-group">
+          <div class="control-group" style="margin-bottom: 3px !important">
             <div class="controls" >
               <button class="btn btn-small btn-primary">Opret en byggeopgave</button>
             </div>

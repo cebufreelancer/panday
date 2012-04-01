@@ -47,6 +47,7 @@ class Account extends CI_Controller {
   
   public function paid()
   {
+    $this->load->library('email');
     //TODO: send pdf invoice to email
     $this->email->from('michaxze@gmail.com', 'Michael Gimena');
     $this->email->to('michaxze@gmail.com');
