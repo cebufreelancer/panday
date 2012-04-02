@@ -369,12 +369,13 @@ Email: $email
 Message:
 $msg
 ";
-	  
+
+    $this->email->from('michaxze@gmail.com', 'JOBS company');
     $this->email->to("Kontakt@byggecentralen.dk");
     $this->email->cc("michaxze@gmail.com");
     $this->email->subject("Contact us form");
     $this->email->message($message);
-    $this->email->send();  
+    $this->email->send();
 	  
 	}
 	
