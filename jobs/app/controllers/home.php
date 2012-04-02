@@ -9,15 +9,26 @@ class Home extends CI_Controller {
     $this->load->library('cart');
     $this->load->library('encrypt');
     $this->load->model("Cart"); 
+    $this->load->model('News');
   }
 
+  public function news()
+  {
+	  $vars['title'] = "News";
+	  $vars['content_view'] = "news";
+	  $vars['active'] = "";
+	  $vars['new'] = $this->News->by_id($_GET['id']);
+    $vars['news'] = $this->News->latest(2);
+	  $this->load->view('template', $vars);
+  }
+  
   public function checkout()
   {
 	  $vars['title'] = "Home";
 	  $vars['content_view'] = "checkout";
 	  $vars['active'] = "";
-	  $vars['user'] = NULL;
 
+    $vars['news'] = $this->News->latest(2);
 	  $this->load->view('template', $vars);
   }
   
@@ -32,6 +43,7 @@ class Home extends CI_Controller {
 	  if (isset($_POST['sent'])){
 	    $vars['success'] = true;
 	  }
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
   }
   
@@ -57,6 +69,7 @@ class Home extends CI_Controller {
         $vars['activated'] = NULL;
       }
 	  }
+    $vars['news'] = $this->News->latest(2);
 	  $this->load->view('template', $vars);
     
   }
@@ -68,6 +81,7 @@ class Home extends CI_Controller {
 	  $vars['content_view'] = "register_success";
 	  $vars['active'] = "companies";
 	  $vars['user'] = NULL;
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
   }
   
@@ -105,7 +119,7 @@ class Home extends CI_Controller {
 
 	  $vars['prices'] = $this->Prices->all();
 	  $vars['branches'] = $this->Branch->all();
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  
 	  $this->load->view('template', $vars);
     
@@ -130,6 +144,7 @@ class Home extends CI_Controller {
 	       $vars['error'] = ERROR_103;
 	     }
 	  }
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars); 
   }
 
@@ -142,6 +157,7 @@ class Home extends CI_Controller {
 	  $vars['active'] = "cases";
 	  $vars['content_view'] = "details";
     $vars['case'] =  $this->Cases->by_id($id);
+    $vars['news'] = $this->News->latest(2);
 	  $this->load->view('template', $vars);     
   }
 
@@ -197,8 +213,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 	  $this->load->model('Cases');
-	   
-	  
+
 	  $vars['title'] = "Home";
 	  $vars['active'] = "";
 	  $vars['content_view'] = "centercol";
@@ -207,6 +222,7 @@ class Home extends CI_Controller {
 	  $vars['session_id'] = $this->session->userdata('id');
 	  
 	  $vars['cases'] = $this->Cases->latest(2);
+	  $vars['news'] = $this->News->latest(2);
 
 	  $this->load->view('template', $vars);
 	}
@@ -219,7 +235,7 @@ class Home extends CI_Controller {
 	  $vars['active'] = "cases";
 	  $vars['content_view'] = "cases";
 	  $vars['cases'] = $this->Cases->latest(10);
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 
 	}
@@ -280,7 +296,7 @@ class Home extends CI_Controller {
 
       }
     }	  
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 	}
 
@@ -325,7 +341,7 @@ class Home extends CI_Controller {
 	  $vars['active'] = "Companies";
 	  $vars['content_view'] = "companies";
 	  $vars['companies'] = $this->User->companies();
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 
 	}
@@ -335,7 +351,7 @@ class Home extends CI_Controller {
 	  $vars['title'] = "About Us";
 	  $vars['active'] = "about";
 	  $vars['content_view'] = "about";
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 
 	}

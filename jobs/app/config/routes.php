@@ -50,6 +50,7 @@ $route['register_success'] = "home/register_success";
 $route['activate'] = "home/activate";
 $route['password_reset'] = "home/password_reset";
 $route['checkout'] = "home/checkout";
+$route['news'] = "home/news";
 
 $route['addtocart'] = "home/addtocart";
 $route['cases'] = "home/cases";
