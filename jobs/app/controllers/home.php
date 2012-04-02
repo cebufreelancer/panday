@@ -371,11 +371,7 @@ $msg
 ";
 	  
     $this->email->to("Kontakt@byggecentralen.dk");
-    $this->email->subject("Contact us form");
-    $this->email->message($message);
-    $this->email->send();  
-
-    $this->email->to("michaxze@gmail.com");
+    $this->email->cc("michaxze@gmail.com");
     $this->email->subject("Contact us form");
     $this->email->message($message);
     $this->email->send();  
