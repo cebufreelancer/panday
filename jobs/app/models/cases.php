@@ -37,7 +37,7 @@ class Cases extends CI_Model {
     $branch_codes = '';
     foreach($post['branches'] as $b)
     {
-      $branch_codes += $b . ", ";
+      $branch_codes .= $b . ", ";
     }
     
     $this->branch_codes = $branch_codes;

@@ -32,8 +32,9 @@ class Account extends CI_Controller {
   public function checkout()
   {
     if(!$this->session->userdata('email')) {
-      redirect("/", "location");
+      redirect("/checkout", "locattion");
     }
+    
     $this->load->model("Invoices");
     $cart = $this->Cart->mycart($this->session->userdata('id'));
 
@@ -75,13 +76,17 @@ class Account extends CI_Controller {
 
   public function cart_delete()
   {
-    if(!$this->session->userdata('email')) {
-      redirect("/", "location");
-    }
     $this->load->model("Cart");
     $id = $_GET['id'];
     $user_id = $this->session->userdata('id');
-    $this->db->query("Delete from carts where user_id = '$user_id' AND id='$id'");
+    $cart_session = $this->session->userdata('cart_session');
+
+    if ($user_id){
+      $this->db->query("Delete from carts where user_id='$user_id' AND id='$id'");
+    }else{
+      $this->db->query("Delete from carts where cart_session='$cart_session' AND id='$id'");
+    }
+    
     redirect("/account/cart", "location");
   }
   
@@ -128,16 +133,18 @@ class Account extends CI_Controller {
 
 	public function cart()
 	{
-	  if(!$this->session->userdata('email')) {
-      redirect("/", "location");
-    }
     
 	  $this->load->model('Cart');
 	  
 	  $vars['title'] = "Cart";
 	  $vars['active'] = "Account::Cart";
 	  $vars['content_view'] = "account/cart";
-	  $vars['items'] = $this->Cart->mycart($this->session->userdata('id'));
+  
+    if ($this->session->userdata('email')){
+      $vars['items'] = $this->Cart->mycart($this->session->userdata('id'));
+    }else{
+	    $vars['items'] = $this->Cart->mycartsession($this->session->userdata('cart_session'));
+    }
 	  
 	  $this->load->view('template', $vars);
 

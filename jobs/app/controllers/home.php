@@ -11,6 +11,16 @@ class Home extends CI_Controller {
     $this->load->model("Cart"); 
   }
 
+  public function checkout()
+  {
+	  $vars['title'] = "Home";
+	  $vars['content_view'] = "checkout";
+	  $vars['active'] = "";
+	  $vars['user'] = NULL;
+
+	  $this->load->view('template', $vars);
+  }
+  
   public function password_reset()
   {
 	  $vars['title'] = "Home";

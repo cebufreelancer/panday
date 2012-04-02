@@ -3,15 +3,6 @@ $CI =& get_instance();
 ?>
 
 <div >&nbsp;</div>
-
-<?php if (!$this->session->userdata('email')) {?>
-<div>
-  Are you a company?
-  <a class="btn" href="/register" >Register Here</a>
-</div>
-<?php } ?>
-
-<?php if ($this->session->userdata('company')) {?>
   <script>
   ncart = 0;
   </script>
@@ -24,7 +15,7 @@ $CI =& get_instance();
       $cart_items = $this->Cart->mycart($this->session->userdata('id'));
     }else{
       $query = $this->db->query("select * from carts where cart_session='" . $this->session->userdata('cart_session') . "'"); 
-      $cart_items = $query->result_array();      
+      $cart_items = $query->result_array();
     }
     if (sizeof($cart_items) > 0) {
     ?>
@@ -36,7 +27,7 @@ $CI =& get_instance();
     </span>
   </div>
 
-<?php } ?>
+
 
 
 

@@ -9,6 +9,12 @@ class Cart extends CI_Model {
   {
       parent::__construct();
   } 
+
+  function mycartsession($cart_session)
+  {
+    $query = $this->db->query("select carts.*, carts.id as cid, cases.*, prices.* from carts LEFT JOIN cases on carts.case_id = cases.id LEFT JOIN prices on cases.budget_id = prices.id where carts.cart_session = '$cart_session' ORDER BY carts.created_at DESC");
+    return $query->result_array();
+  }
   
   function mycart($user_id)
   {
