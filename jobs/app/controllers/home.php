@@ -358,12 +358,28 @@ class Home extends CI_Controller {
 
 	public function contactus()
 	{
-	  $vars['title'] = "Contact Us";
-	  $vars['active'] = "contauct";
-	  $vars['content_view'] = "contactus";
+	  $this->load->library('email');
+	
+	  $name = $_POST['con_name'];
+	  $email = $_POST['con_email'];
+	  $msg = $_POST['con_message'];
+    $message = "
+Name: $name
+Email: $email
+Message:
+$msg
+";
 	  
-	  $this->load->view('template', $vars);
+    $this->email->to("Kontakt@byggecentralen.dk");
+    $this->email->subject("Contact us form");
+    $this->email->message($message);
+    $this->email->send();  
 
+    $this->email->to("michaxze@gmail.com");
+    $this->email->subject("Contact us form");
+    $this->email->message($message);
+    $this->email->send();  
+	  
 	}
 	
 }

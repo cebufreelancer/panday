@@ -10,6 +10,7 @@ class Account extends CI_Controller {
     $this->load->library('encrypt');
     $this->load->model("Cart"); 
     $this->load->model("User"); 
+    $this->load->model('News');    
   }
 
   public function update()
@@ -70,7 +71,7 @@ class Account extends CI_Controller {
 	  $vars['active'] = "Account::Cases";
 	  $vars['content_view'] = "account/invoices";
 	  $vars['invoices'] = $this->Invoices->myinvoices($this->session->userdata('id'));
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
   }
 
@@ -126,7 +127,7 @@ class Account extends CI_Controller {
       $companies = $this->Invoices->get_companies($case['id']);
 	    $vars['companies'] = $companies;
 	  }
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 
 	}
@@ -145,7 +146,7 @@ class Account extends CI_Controller {
     }else{
 	    $vars['items'] = $this->Cart->mycartsession($this->session->userdata('cart_session'));
     }
-	  
+    $vars['news'] = $this->News->latest(2);	  
 	  $this->load->view('template', $vars);
 
 	}
@@ -175,7 +176,7 @@ class Account extends CI_Controller {
 	      $vars['error'] = ERROR_101;
 	    }
 	  }	  
-
+    $vars['news'] = $this->News->latest(2);
 	  $this->load->view('template', $vars);
 	}
 
@@ -193,7 +194,8 @@ class Account extends CI_Controller {
 	  $vars['active'] = "Account";
 	  $vars['content_view'] = "account/index";
     $vars['user'] = $this->User->find_by_email($this->session->userdata('email'));
-    
+
+    $vars['news'] = $this->News->latest(2);    
 	  $this->load->view('template', $vars);
 
 	}

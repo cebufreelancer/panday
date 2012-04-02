@@ -115,25 +115,47 @@
        </div>
      </div>
 
+<script>
+$(document).ready(function(){
+  $("#contact-form").validate({
+    submitHandler: function(form){
+      $("#contact-content").empty();
+      $("#contact-content").append("Message successfully submitted.");
+      $.ajax({
+        type: 'POST',
+        url: '/contactus',
+        data: $(form).serializeArray(),
+        success: function(data){
+          
+        }
+      });
+      return false;
+    }
+  });
+});
+</script>
+
      <div id="myModal" class="modal hide fade" style="display: none; ">
                  <div class="modal-header">
                    <a class="close" data-dismiss="modal">X</a>
                    <h3>Contact us</h3>
                  </div>
-                 <div class="modal-body">
+                 <div class="modal-body" id="contact-content">
                    <h4>Please fill in the form below.</h4>
-                  
-                   <form class="well">
+                   
+                   <form class="well" action="/contactus" method="post" name="contact-form" id='contact-form'>
                      <label>Name: </label>
-                     <input type="text" class="span3" placeholder="Name...">
+                     <input type="text" name="con_name" id="con_name" class="required span3" >
                      <label>Email: </label>
-                     <input type="text" class="span3" placeholder="Email...">
+                     <input type="text" name="con_email" id="con_email" class="required email span3" >
                      <label>Message: </label>
-                     <textarea class="span3" cols="5" rows="6"></textarea>
-                   </form>                                      
+                     <textarea name="con_message" class="required span3" cols="5" rows="6"></textarea>
+                     <div class="modal-footer span4 pull-left">
+                       <a href="#" class="btn" data-dismiss="modal">Close</a>
+                       <button type="submit" class="btn btn-primary">Send message</button>
+                     </div>
+
+                   </form>
                  </div>
-                 <div class="modal-footer">
-                   <a href="#" class="btn" data-dismiss="modal">Close</a>
-                   <a href="#" class="btn btn-primary">Send message</a>
-                 </div>
+                 
                </div>
