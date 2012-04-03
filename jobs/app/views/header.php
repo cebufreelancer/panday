@@ -99,7 +99,7 @@
                    <li style="width:90%"><a href="/account/cart">My Cart</a></li>
                    <?php endif ?>
                    <li style="width:90%"><a href="/account/changepw">Change Password</a></li>
-                   <li style="width:90%"><a href="/account/bought">Bought</a></li>
+                   <li style="width:90%"><a href="/account/bought">Invoice</a></li>
                    <li class='divider'></li>
                    <li style="width:90%"><a href="/logout">Log-out</a></li>
                  </ul>

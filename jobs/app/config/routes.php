@@ -70,6 +70,8 @@ $route['account/changepw'] = "account/changepw";
 $route['account/cart-empty'] = "account/cart_empty";
 $route['account/cart-delete'] = "account/cart_delete";
 $route['account/bought'] = "account/bought";
+$route['account/view_invoice'] = "account/view_invoice";
+$route['account/pdf'] = "account/pdf";
 
 
 /* End of file routes.php */

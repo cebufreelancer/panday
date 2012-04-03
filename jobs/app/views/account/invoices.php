@@ -13,6 +13,8 @@
           <td><?php echo $inv['total'];?></td>
           <td>
             <p>Date created: <?php echo date("d-m-Y", strtotime($inv['created_at']));?> </p>
+            <a href="/account/view_invoice?id=<?php echo $inv['id'];?>" class="label">View Invoice</a>
+            <a href="/account/pdf?id=<?php echo $inv['id'];?>" class="label">Download PDF</a>
           </td>
         </tr>
         <?php } ?>

@@ -11,6 +11,12 @@ class Invoices extends CI_Model {
       parent::__construct();
   } 
 
+  function get_items($id)
+  {
+    $query = $this->db->query("select * from invoice_items INNER JOIN cases on cases.id = invoice_items.case_id  where invoice_id=$id");
+    return $query->result_array();
+  }
+  
   function myinvoices($user_id)
   {
     $query = $this->db->query("select * from invoices WHERE user_id = '$user_id' ORDER BY created_at DESC");

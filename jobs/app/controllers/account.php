@@ -13,6 +13,43 @@ class Account extends CI_Controller {
     $this->load->model('News');    
   }
 
+  public function pdf()
+  {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    
+    $data = array();
+    $this->load->helper(array('dompdf', 'file'));
+    // page info here, db calls, etc.     
+    $html = $this->load->view('account/pdf_invoice', $data, true);
+    pdf_create($html, 'filename');
+
+//    or
+//    $data = pdf_create($html, '', false);
+//    write_file('name', $data);
+    //if you want to write it to disk and/or send it as an attachment
+    
+  }
+  
+  public function view_invoice()
+  {
+    if(!$this->session->userdata('email')) {
+      redirect("/", "location");
+    }
+    $this->load->model("Invoices");
+
+	  $vars['title'] = "Invoices";
+	  $vars['active'] = "";
+	  $vars['content_view'] = "account/view_invoice";
+	  $vars['invoice'] = $this->Invoices->by_id($_GET['id']);
+	  $vars['invoice_items'] = $this->Invoices->get_items($_GET['id']);
+
+    $vars['news'] = $this->News->latest(2);	  
+	  $this->load->view('template', $vars);    
+    
+  }
+  
   public function update()
   {
     if(!$this->session->userdata('email')) {
