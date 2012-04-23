@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <td><img src="http://localhost:8888/assets/images/logo.png"></td>
+    <td><img src="<?php echo $this->config->base_url(); ?>/assets/images/logo.png"></td>
     <td>
     Our Company Inc <br/>
     www.company.com

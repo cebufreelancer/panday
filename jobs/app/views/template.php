@@ -16,7 +16,9 @@
 
        
         <div class="span2">
-          <?php require_once("rightcol.php"); ?>
+          <?php if ( isset($active) && $active != "loginform" ) { ?>
+            <?php require_once("rightcol.php"); ?>
+          <?php }?>
         </div>
       </div>
 

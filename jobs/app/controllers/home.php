@@ -191,6 +191,17 @@ class Home extends CI_Controller {
     redirect('/', 'location');
   }
 
+  public function loginform()
+  {
+	  $vars['title'] = "Login Form";
+	  $vars['active'] = "loginform";
+	  $vars['content_view'] = "loginform";
+	  	  
+	  $vars['news'] = $this->News->latest(2);
+
+	  $this->load->view('template', $vars);    
+  }
+
   public function login()
   {
     $this->load->model('User');
@@ -211,7 +222,12 @@ class Home extends CI_Controller {
       }
     }else{
       $error = "error=1";
-      redirect("/?$error", 'location');
+      if (isset($_POST['returl'])) {
+        $returl = $_POST['returl'];
+        redirect($returl . "?$error", 'location');
+      }else{
+        redirect("/?$error", 'location');
+      }
     }
     
   }

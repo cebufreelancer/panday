@@ -43,6 +43,7 @@ $route['default_controller'] = "home";
 $route['404_override'] = '';
 
 $route['login'] = "home/login";
+$route['loginform'] = "home/loginform";
 $route['logout'] = "home/logout";
 $route['forget'] = "home/forget";
 $route['register'] = "home/register";
