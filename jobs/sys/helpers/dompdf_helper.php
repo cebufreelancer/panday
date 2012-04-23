@@ -6,6 +6,7 @@ function pdf_create($html, $filename='', $stream=TRUE)
     $dompdf = new DOMPDF();
     $dompdf->load_html($html);
     $dompdf->render();
+    $dompdf->set_base_path("http://localhost:8888/");
     if ($stream) {
         $dompdf->stream($filename.".pdf");
     } else {

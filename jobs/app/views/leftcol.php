@@ -1,3 +1,6 @@
+<?php if ($this->session->userdata('email')) {?>
+<div >&nbsp;</div>
+<?php } ?>
 <div >&nbsp;</div>
 
 <div class="row">

@@ -37,7 +37,8 @@ class Invoices extends CI_Model {
   
   function by_id($id)
   {
-    $query = $this->db->query("select * FROM invoices where id = '$id'");
+    $user_id = $this->session->userdata('id');
+    $query = $this->db->query("select * FROM invoices where user_id = $user_id AND id = '$id'");
 
     $ret = $query->result_array();
     return $ret[0];

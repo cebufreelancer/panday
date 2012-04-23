@@ -39,7 +39,8 @@
 
     <div class='topbar'>
        <div class='header'>
-         <div class='container'>
+         <div class='container' style="">
+           
            <a class='brand' href='/' title=''>
              <img alt='Jobs Logo' height='30' src='/assets/images/company-logo.png' width='116' />
            </a>
@@ -83,7 +84,7 @@
              
              <?php
              $CI =& get_instance();
-             if ($CI->session->userdata('email')):
+             if ($CI->session->userdata('emailtest')):
              ?>
              <li>
                <div class="btn-group">
@@ -99,7 +100,9 @@
                    <li style="width:90%"><a href="/account/cart">My Cart</a></li>
                    <?php endif ?>
                    <li style="width:90%"><a href="/account/changepw">Change Password</a></li>
+                   <?php if ($this->session->userdata('company')): ?>               
                    <li style="width:90%"><a href="/account/bought">Invoice</a></li>
+                   <?php endif ?>
                    <li class='divider'></li>
                    <li style="width:90%"><a href="/logout">Log-out</a></li>
                  </ul>
@@ -108,7 +111,29 @@
             <?php endif; ?>
              
            </ul>
-                  
+
+
+
+            <?php if($this->session->userdata('email')) { ?>
+             <div style="width: 430px; margin-bottom: 0px; height: 30px; margin-bottom: 0px; float: right;">
+               <ul class="nav nav-pills" style="font-size: 11px;">
+                 <li class='<?php if ($active == "account"){ echo "active"; }?>'>
+                   <a href="/account">Account</a>
+                 </li>
+                 <?php if (!$this->session->userdata('company')): ?>
+                 <li class='<?php if ($active == "cases"){ echo "active"; }?>'><a href="/account/cases">My Cases</a></li>
+                 <?php endif ?>
+                 <?php if ($this->session->userdata('company')): ?>
+                 <li class='<?php if ($active == "cart"){ echo "active"; }?>'><a href="/account/cart">My Cart</a></li>
+                 <?php endif ?>
+                 <li class='<?php if ($active == "changepw"){ echo "active"; }?>'><a href="/account/changepw">Change password</a></li>
+                 <?php if ($this->session->userdata('company')): ?>
+                 <li class='<?php if ($active == "bought"){ echo "active"; }?>'><a href="/account/bought">Invoice</a></li>
+                 <?php endif ?>
+                 <li><a href="/logout">Log-out</a></li>
+               </ul>                  
+             </div>
+           <?php } ?>
            
            
          </div>

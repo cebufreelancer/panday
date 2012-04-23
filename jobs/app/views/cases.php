@@ -44,7 +44,8 @@
                   <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
                 <?php } ?>
               <?php }else{ ?>
-                <a href="/?error=2" class="btn btn-small btn-warning " data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
+                <!--<a href="/?error=2" class="btn btn-small btn-warning " data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a> -->
+                <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
               <?php } ?>
               <a href="/details?id=<?php echo $c['id'];?>" class="label label-info">Details</a></div>
           </td>

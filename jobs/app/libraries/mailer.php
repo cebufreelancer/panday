@@ -38,7 +38,7 @@ The Company Team
 	    $this->load->model("User");
 	    $this->load->model("Tokens");
 
-      $this->email->from('michaxze@gmail.com', 'JOBS company');
+      $this->email->from('michaxze@gmail.com', 'Byggecentralen');
       $user = $this->User->find_by_email($to);
 
       $t_id = $this->Tokens->createnew($user);
@@ -46,13 +46,11 @@ The Company Team
       $base_url = $this->config->item('base_url');
 
       $link = $base_url . "/activate?email=" .  urlencode($user['email']) . "&token=" . $token['token'];
-      $message = "Hi $name,
 
-Please activate your account by clicking the link below:
-$link
+      ob_start();
+      include("templates/casecreated.html");
+      $message = ob_get_clean();
 
-The Company Team
-      ";
       $this->email->to($to);
       $this->email->subject("Please activate your account at Company");
       $this->email->message($message);
@@ -64,7 +62,7 @@ The Company Team
       $this->load->model("User");
       $this->load->model("Tokens");
 	    $this->load->library('email');
-      
+
       if ($subject == ""){
         $subject  = "Reset your password";
       }
@@ -72,8 +70,13 @@ The Company Team
       $t_id = $this->Tokens->createnew($user);
       $token = $this->Tokens->by_id($t_id);
       $base_url = $this->config->item('base_url');
-      $link = $base_url . "/password_reset?email=" .  urlencode($user['email']) . "&token=" . $token['token'];
-      $name = $user['name'];
+      $link = $base_url . "password_reset?email=" .  urlencode($user['email']) . "&token=" . $token['token'];
+      $name = $user['usertype'] == 'company' ? $user['company_name'] : $user['name'];
+
+      ob_start();
+      include("templates/password_reset.html");
+      $message = ob_get_clean();
+/*      
 $message = "
 Hi $name
 
@@ -84,6 +87,7 @@ $link;
 
 The Company Team
 ";
+*/
       $this->email->from('michaxze@gmail.com', 'JOBS company');
       $this->email->to($user['email']);
       $this->email->subject($subject);

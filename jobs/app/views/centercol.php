@@ -56,7 +56,7 @@
                 <?php if ($this->session->userdata('company')) {?>
                 <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
                 <?php } ?>
-              <?php }else{ ?>                
+              <?php }else{ ?>
               <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $c['id'];?>" price="<?php echo $c['value1'];?>">Add to cart</a>
               <?php } ?>
               <a href="/details?id=<?php echo $c['id'];?>" class="label label-info">Details</a>

@@ -204,10 +204,16 @@ class Home extends CI_Controller {
         $data['company'] = $user['usertype'];
       }
       $this->session->set_userdata($data);
+      if ($user['usertype'] == 'company'){
+        redirect("/account/bought", 'location');
+      }else{
+        redirect("/account/cases", 'location');
+      }
     }else{
       $error = "error=1";
+      redirect("/?$error", 'location');
     }
-    redirect("/?$error", 'location');
+    
   }
   
 	public function index()
@@ -241,7 +247,7 @@ class Home extends CI_Controller {
 	}
 
 	public function create()
-	{
+	{	  
     $this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 	  
@@ -370,8 +376,8 @@ Message:
 $msg
 ";
 
-    $this->email->from('michaxze@gmail.com', 'JOBS company');
-    $this->email->to("Kontakt@byggecentralen.dk");
+    $this->email->from('michaxze@gmail.com', 'Byggecentralen');
+    $this->email->to("dennis@snupti.dk");
     $this->email->cc("michaxze@gmail.com");
     $this->email->subject("Contact us form");
     $this->email->message($message);

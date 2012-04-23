@@ -7,6 +7,10 @@
         </div>
 
         <div class="span6">
+          <?php if ($this->session->userdata('email')) {?>
+            <div >&nbsp;</div>
+          <?php } ?>
+          
           <?php $this->load->view($content_view); ?>
         </div>
 

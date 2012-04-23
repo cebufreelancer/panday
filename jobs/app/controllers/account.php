@@ -18,6 +18,9 @@ class Account extends CI_Controller {
     if(!$this->session->userdata('email')) {
       redirect("/", "location");
     }
+    $this->load->model("Invoices");
+	  $vars['invoice'] = $this->Invoices->by_id($_GET['id']);
+	  $vars['invoice_items'] = $this->Invoices->get_items($_GET['id']);
     
     $data = array();
     $this->load->helper(array('dompdf', 'file'));
@@ -25,7 +28,7 @@ class Account extends CI_Controller {
     $html = $this->load->view('account/pdf_invoice', $data, true);
     pdf_create($html, 'filename');
 
-//    or
+
 //    $data = pdf_create($html, '', false);
 //    write_file('name', $data);
     //if you want to write it to disk and/or send it as an attachment
@@ -105,7 +108,7 @@ class Account extends CI_Controller {
     $this->load->model("Invoices");
     
 	  $vars['title'] = "Invoices";
-	  $vars['active'] = "Account::Cases";
+	  $vars['active'] = "bought";
 	  $vars['content_view'] = "account/invoices";
 	  $vars['invoices'] = $this->Invoices->myinvoices($this->session->userdata('id'));
     $vars['news'] = $this->News->latest(2);	  
@@ -131,12 +134,15 @@ class Account extends CI_Controller {
   public function cart_empty()
   {
     if(!$this->session->userdata('email')) {
-      redirect("/", "location");
+      $cs = $this->session->userdata('cart_session');
+      $this->db->query("Delete from carts where cart_session = '$cs'");
+      redirect("/account/cart");
+    }else{
+      $this->load->model("Cart");
+      $id = $this->session->userdata('id');
+      $this->db->query("Delete from carts where user_id = '$id'");
+      redirect("/account/cart?empty=1", 'location');
     }
-    $this->load->model("Cart");
-    $id = $this->session->userdata('id');
-    $this->db->query("Delete from carts where user_id = '$id'");
-    redirect("/account/cart?empty=1", 'location');
   }
   
 	public function cases()
@@ -145,11 +151,17 @@ class Account extends CI_Controller {
       redirect("/", "location");
     }
 
+/*    $user= $this->User->find_by_email($this->session->userdata('email'));
+    if ($user['usertype'] == "regular"){
+      redirect("/", "location");
+    }
+*/
+
 	  $this->load->model('Cases');
 	  $this->load->model("Invoices");
 	  
 	  $vars['title'] = "Cases";
-	  $vars['active'] = "Account::Cases";
+	  $vars['active'] = "cases";
 	  $vars['content_view'] = "account/cases";
 	  $vars['cases'] = $this->Cases->mycases($this->session->userdata('id'));
 	  $vars['case'] = NULL;
@@ -175,7 +187,7 @@ class Account extends CI_Controller {
 	  $this->load->model('Cart');
 	  
 	  $vars['title'] = "Cart";
-	  $vars['active'] = "Account::Cart";
+	  $vars['active'] = "cart";
 	  $vars['content_view'] = "account/cart";
   
     if ($this->session->userdata('email')){
@@ -196,7 +208,7 @@ class Account extends CI_Controller {
 	  $this->load->model("User");
 	  
 	  $vars['title'] = "Change Password";
-	  $vars['active'] = "Change Password";
+	  $vars['active'] = "changepw";
 	  $vars['content_view'] = "account/changepw";
 
 	  if (isset($_POST['sent'])){
@@ -228,7 +240,7 @@ class Account extends CI_Controller {
 	  $vars['user'] = NULL;
 
 	  $vars['title'] = "Account";
-	  $vars['active'] = "Account";
+	  $vars['active'] = "account";
 	  $vars['content_view'] = "account/index";
     $vars['user'] = $this->User->find_by_email($this->session->userdata('email'));
 
