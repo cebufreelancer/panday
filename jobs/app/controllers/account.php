@@ -102,9 +102,15 @@ class Account extends CI_Controller {
   
   public function bought()
   {
+    
     if(!$this->session->userdata('email')) {
       redirect("/", "location");
     }
+    
+    if (!$this->session->userdata('company')) {
+      redirect("/account", "location");
+    }
+    
     $this->load->model("Invoices");
     
 	  $vars['title'] = "Invoices";
