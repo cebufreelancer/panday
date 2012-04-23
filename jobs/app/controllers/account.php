@@ -22,7 +22,10 @@ class Account extends CI_Controller {
 	  $vars['invoice'] = $this->Invoices->by_id($_GET['id']);
 	  $vars['invoice_items'] = $this->Invoices->get_items($_GET['id']);
     
-    $data = array();
+    $data['user'] = $this->User->find_by_email($this->session->userdata('email'));
+	  $data['invoice'] = $this->Invoices->by_id($_GET['id']);
+	  $data['invoice_items'] = $this->Invoices->get_items($_GET['id']);
+    
     $this->load->helper(array('dompdf', 'file'));
     // page info here, db calls, etc.     
     $html = $this->load->view('account/pdf_invoice', $data, true);
