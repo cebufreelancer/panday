@@ -4,11 +4,15 @@ $CI =& get_instance();
 <?php if ($this->session->userdata('email')) {?>
 <div >&nbsp;</div>
 <?php } ?>
+
 <div >&nbsp;</div>
   <script>
   ncart = 0;
   </script>
+  
+  <?php if ($this->session->userdata('company') || !$this->session->userdata('email') ) {?>
   <div id="cart" onclick="location.replace('/account/cart');" style="margin-top: 8px; cursor:pointer" onmouseover="$(this).css('text-decoration', 'underline')" onmouseout="$(this).css('text-decoration', 'none')">
+
     <i class="icon-shopping-cart"></i>
     <span>
     <?php
@@ -28,7 +32,7 @@ $CI =& get_instance();
     <?php }?>
     </span>
   </div>
-
+  <?php } ?>
 
 
 
