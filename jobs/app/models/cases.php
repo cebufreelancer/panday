@@ -15,6 +15,121 @@ class Cases extends CI_Model {
   {
       parent::__construct();
   } 
+
+  function record_count($limit, $start, $get)
+  {
+    $orderby = "created_at DESC";
+    $search = "";
+
+    if (isset($get['q'])) {
+      $search = $get['q'];
+    }
+
+    if (isset($get['sortby'])){
+      if ($get['sortby'] == "date") {
+        $orderby = "created_at DESC";
+      }else if ($get['sortby'] == "price"){
+        $orderby = "value1 ASC";
+      }
+    }
+
+    $rows = array();
+    $sql = "select cases.id, title, description, budget_id, address, zipcode, city, 
+      telno, user_id, status, created_at, branch_codes, prices.label, prices.value1 
+    FROM cases left join prices ON cases.budget_id = prices.id 
+    WHERE (title like '%$search%' OR description like '%$search%' OR address like '%$search%' OR city like '%$search%'  ) ";
+
+    if (isset($get['branches'])){
+      $branch_sql = " AND (";
+      $size = sizeof($get['branches']);
+      $i = 1;
+      foreach($get['branches'] as $b){
+        $branch_sql .= "branch_codes like '%$b%'";
+
+        if ($i < $size) {
+          $branch_sql .= " OR ";
+        }
+
+        $i++;
+      }
+
+      $branch_sql .= ") ";
+      $sql .= $branch_sql;
+    }
+
+    if (isset($get['from_zipcode']) && isset($get['to_zipcode'])){
+      if ($get['from_zipcode'] != "" && $get['to_zipcode'] != ""){
+        $from = $get['from_zipcode'];
+        $to = $get['to_zipcode'];
+        $sql .= " AND zipcode BETWEEN $from AND $to ";
+      }
+    }
+
+    $sql .= "ORDER BY $orderby";
+    $query = $this->db->query($sql);
+    return sizeof($query->result_array());
+  }
+
+
+  
+  function fetch_cases($limit, $start, $get)
+  {
+    $start = ($start * $limit) - $limit;
+
+    $orderby = "created_at DESC";
+    $search = "";
+    
+    if (isset($get['q'])) {
+      $search = $get['q'];
+    }
+    
+    if (isset($get['sortby'])){
+      if ($get['sortby'] == "date") {
+        $orderby = "created_at DESC";
+      }else if ($get['sortby'] == "price"){
+        $orderby = "value1 ASC";
+      }
+    }
+    
+    $rows = array();
+    $sql = "select cases.id, title, description, budget_id, address, zipcode, city, 
+      telno, user_id, status, created_at, branch_codes, prices.label, prices.value1 
+    FROM cases left join prices ON cases.budget_id = prices.id 
+    WHERE (title like '%$search%' OR description like '%$search%' OR address like '%$search%' OR city like '%$search%'  ) ";
+    
+    if (isset($get['branches'])){
+      $branch_sql = " AND (";
+      $size = sizeof($get['branches']);
+      $i = 1;
+      foreach($get['branches'] as $b){
+        $branch_sql .= "branch_codes like '%$b%'";
+
+        if ($i < $size) {
+          $branch_sql .= " OR ";
+        }
+
+        $i++;
+      }
+
+      $branch_sql .= ") ";
+      $sql .= $branch_sql;
+    }
+    
+    if (isset($get['from_zipcode']) && isset($get['to_zipcode'])){
+      if ($get['from_zipcode'] != "" && $get['to_zipcode'] != ""){
+        $from = $get['from_zipcode'];
+        $to = $get['to_zipcode'];
+        $sql .= " AND zipcode BETWEEN $from AND $to ";
+      }
+    }
+    
+    $sql .= "ORDER BY $orderby";
+    $sql .= " LIMIT $start, $limit";
+
+    $query = $this->db->query($sql);
+    return $query->result_array();
+  }
+
   
   function latest($limit=10)
   {

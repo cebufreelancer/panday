@@ -170,6 +170,7 @@ $(document).ready(function(){
   <li id="three" class="header-step" title="2" summary="true"><a href="#">Godkend & send</a></li>
 </ul>
 <div>
+
   <form id="case-form" name="case-form" method="post" action="/create">
     <input type="hidden" name="sent" value="sent">
     <div class='step'>
@@ -187,7 +188,7 @@ $(document).ready(function(){
 
       <label>Branches</label>
       <?php foreach($branches as $b){ ?>
-      <label for="<?php echo $b['code'];?>" class="checkbox" style="display: inline-block !important; padding-right: 10px">
+      <label for="<?php echo $b['code'];?>" class="checkbox" style="display: inline-block !important; padding-right: 10px; width: 100px">
         <input type="checkbox" value="<?php echo $b['code'];?>" id="<?php echo $b['code'];?>" name="branches[]" class="branches required">
         <?php echo $b['name'];?>
       </label>

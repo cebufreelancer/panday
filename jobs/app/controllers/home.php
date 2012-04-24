@@ -252,12 +252,20 @@ class Home extends CI_Controller {
 	public function cases()
 	{
 	  $this->load->model('Cases');
-	  
+	  $this->load->model('Branch');
+	  $this->load->library('pagination');
+	  $this->load->helper("url");
+    
+
+    $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
+
+    $vars["total_rows"] = $this->Cases->record_count(10, $page, $_GET);    	  
 	  $vars['title'] = "Cases";
 	  $vars['active'] = "cases";
 	  $vars['content_view'] = "cases";
-	  $vars['cases'] = $this->Cases->latest(10);
+	  $vars['cases'] = $this->Cases->fetch_cases(10, $page, $_GET);
     $vars['news'] = $this->News->latest(2);	  
+    $vars['branches'] = $this->Branch->all();
 	  $this->load->view('template', $vars);
 
 	}
