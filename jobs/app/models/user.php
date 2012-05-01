@@ -111,6 +111,22 @@ class User extends CI_Model {
     $this->db->update('users', $data);
   }
 
+  function all($status='', $type=''){
+    
+    if ($status != ''){
+      $this->db->where("status", $status);
+    }
+    if ($type == 'c'){
+      $this->db->where("usertype", 'company');
+    }else{
+      $this->db->where("usertype", 'regular');
+    }
+    
+    $this->db->order_by("id", "desc");
+    $result = $this->db->get('users');
+    return $result->result_array();
+    
+  }
   
 }
 

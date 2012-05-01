@@ -9,6 +9,13 @@ class News extends CI_Model {
   {
       parent::__construct();
   } 
+
+  function getall()
+  {
+    $rows = array();
+    $query = $this->db->query("select * from news ORDER BY created_at DESC");
+    return $query->result_array();
+  }
   
   function latest($limit=2)
   {
@@ -28,17 +35,17 @@ class News extends CI_Model {
     return $ret;
   }
   
-    function by_id($id)
-    {
-      $query = $this->db->query("select * from news  WHERE id=$id ORDER BY created_at DESC");
-      $ret = $query->result_array();
+  function by_id($id)
+  {
+    $query = $this->db->query("select * from news  WHERE id=$id ORDER BY created_at DESC");
+    $ret = $query->result_array();
 
-      if (sizeof($ret) > 0 ){
-        return $ret[0];
-      }else{
-        return NULL;
-      }
+    if (sizeof($ret) > 0 ){
+      return $ret[0];
+    }else{
+      return NULL;
     }
+  }
 
   
 }

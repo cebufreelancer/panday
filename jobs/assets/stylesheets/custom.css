@@ -21,6 +21,15 @@ margin-right: auto;
 zoom: 1;
 }
 
+.container2{
+width: 940px;
+height: 60px;
+margin-left: auto;
+margin-right: auto;
+zoom: 1;
+}
+
+
 .brand {
 float: left;
 display: block;

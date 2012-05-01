@@ -43,6 +43,14 @@ class Invoices extends CI_Model {
     $ret = $query->result_array();
     return $ret[0];
   }
+
+  function byid($id)
+  {
+    $query = $this->db->query("select * FROM invoices where id = '$id'");
+
+    $ret = $query->result_array();
+    return $ret[0];
+  }
   
   function createnew($user_id)
   {
@@ -91,6 +99,12 @@ class Invoices extends CI_Model {
       }
     }
     return $invoice;
+  }
+
+  function all(){
+    $this->db->order_by("id", "desc");
+    $result = $this->db->get('invoices');
+    return $result->result_array();    
   }
 
   

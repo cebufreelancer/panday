@@ -74,6 +74,21 @@ $route['account/bought'] = "account/bought";
 $route['account/view_invoice'] = "account/view_invoice";
 $route['account/pdf'] = "account/pdf";
 
+$route['admin'] = "admin/login";
+$route['admin/news'] = "admin/news";
+$route['admin/news_add'] = "admin/news_add";
+$route['admin/news_edit'] = "admin/news_edit";
+$route['admin/news_delete'] = "admin/news_delete";
+$route['admin/prices'] = "admin/prices";
+$route['admin/price_add'] = "admin/price_add";
+$route['admin/pages'] = "admin/pages";
+$route['admin/users'] = "admin/users";
+$route['admin/userview'] = "admin/userview";
+$route['admin/companies'] = "admin/companies";
+$route['admin/companyview'] = "admin/companyview";
+
+$route['admin/invoices'] = "admin/invoices";
+$route['admin/invoiceview'] = "admin/invoiceview";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

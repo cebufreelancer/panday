@@ -14,5 +14,15 @@
       <label class="checkbox"><strong>Budget:</strong> <?php echo $case['value1'];?></label>
       <label class="checkbox"><strong>Branches:</strong> <?php echo $case['branch_codes'];?></label>        
     </div>
+
+    <?php if ($this->session->userdata('email')){ ?>
+      <?php if ($this->session->userdata('company')) {?>
+      <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $case['id'];?>" price="<?php echo $case['value1'];?>">Add to cart</a>
+      <?php } ?>
+    <?php }else{ ?>
+    <a href="" onclick="return false" class="btn btn-small btn-warning case_row" data-id="<?php echo $case['id'];?>" price="<?php echo $case['value1'];?>">Add to cart</a>
+    <?php } ?>
+    
+    
   </div>
 </div>
