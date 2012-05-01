@@ -6,7 +6,7 @@
           <?php require_once('admin_menu.php'); ?>
         </div>
 
-        <div class="span9"  style="min-height: 300px">
+        <div class="span7" style="min-height: 300px">
           <?php if ($this->session->userdata('email')) {?>
             <div >&nbsp;</div>
           <?php } ?>
