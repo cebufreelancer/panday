@@ -295,11 +295,11 @@ class Home extends CI_Controller {
 	    $this->form_validation->set_rules('description', 'Description', 'required');
 	    $this->form_validation->set_rules('city', 'City', 'required');
 	    $this->form_validation->set_rules('zipcode', 'Zip code', 'required');
-      $this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
-      $this->form_validation->set_rules('cpassword', 'Password Confirmation', 'required');
 
       if (!$this->session->userdata('email')){
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('password', 'Password', 'required|matches[cpassword]');
+        $this->form_validation->set_rules('cpassword', 'Password Confirmation', 'required');
       }
 
 	    if ($this->form_validation->run() == FALSE)
