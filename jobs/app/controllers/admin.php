@@ -197,6 +197,10 @@ class Admin extends CI_Controller {
 
       $this->load->library('upload', $config);
 
+      if(!file_exists($config['upload_path'])){
+        mkdir($config['upload_path']);
+      }
+
       if ( !$this->upload->do_upload('image'))
   		{
   			$vars['error'] = array('error' => $this->upload->display_errors());
@@ -333,13 +337,14 @@ class Admin extends CI_Controller {
       if ($this->Admins->login($_POST['username'], $_POST['password'])) {
         $this->session->set_userdata(array('admin' => $_POST['username']));        
         redirect("/admin/dashboard");
+      }else{
+	      $vars['error'] = 1;        
       }
     }
     
 	  $vars['title'] = "Login";
 	  $vars['content_view'] = "admin/login";
 	  $vars['active'] = "login";
-	  $vars['error'] = 1;
 	  $this->load->view('admin_template', $vars);
   }
 

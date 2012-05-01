@@ -11,7 +11,7 @@
     <ul class="nav nav-list">
       <?php foreach($news as $n) {?>
       <li>
-        <p><img src="/assets/images/sample1.jpg" width="150" ></p>
+        <p><img src="/assets/news/<?php echo $n['id'];?>/<?php echo $n['image'];?>" width="150" ></p>
         <p class=""><?php echo $n['title'];?></p>
         <p><a class="label label-info" href="/news?id=<?php echo $n['id'];?>">View details &raquo;</a></p>
       </li>
