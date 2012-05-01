@@ -244,7 +244,7 @@ class Home extends CI_Controller {
 	  $vars['session_id'] = $this->session->userdata('id');
 	  
 	  $vars['cases'] = $this->Cases->latest(2);
-	  $vars['news'] = $this->News->latest(2);
+	  $vars['news'] = $this->News->latest(5);
 
 	  $this->load->view('template', $vars);
 	}

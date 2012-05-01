@@ -76,37 +76,25 @@
 <div class="row">
   <div class="span6">
     <ul class="thumbnails">
-      <li class="span2" >
-        <div class="thumbnailx">
-          <img src="/assets/images/260x180.gif" alt="" width="170">
-          <div class="" >
-            <h5>Title</h5>
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            
-          </div>
-        </div>
-      </li>
+      <?php if (sizeof($news) > 2){?>
+        <?php $cnt = 1;?>
+        <?php foreach($news as $n){?>
+          <?php if ($cnt > 2){?>
+          <li class="span2" >
+            <div class="thumbnailx">
+              <img src="/assets/news/<?php echo $n['id'];?>/<?php echo $n['image'];?>" alt="" width="170">
+              <div class="">
+                <h5><?php echo $n['title'];?></h5>
+                <p><?php echo $n['contents'];?></p>
+              </div>
+            </div>
+          </li>
+        <?php }
+          $cnt++;
+        }
+        ?>
+      <?php } ?>
 
-      <li class="span2" >
-        <div class="thumbnailx">
-          <img src="/assets/images/260x180.gif" alt="" width="170">
-          <div class="">
-            <h5>Title</h5>
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-          </div>
-        </div>
-      </li>
-      <li class="span2" >
-        <div class="thumbnailx">
-          <img src="/assets/images/260x180.gif" alt="" width="170">
-          <div class="" >
-            <h5>Title</h5>
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-
-          </div>
-        </div>
-      </li>
     </ul> 
   </div>
 </div>
