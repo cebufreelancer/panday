@@ -326,7 +326,6 @@ class Home extends CI_Controller {
     	  $vars['title'] = "Create a Case";
     	  $vars['content_view'] = "create_success";
     	  $vars['active'] = "create";
-
       }
     }	  
     $vars['news'] = $this->News->latest(2);	  
